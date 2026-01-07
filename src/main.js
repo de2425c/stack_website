@@ -30,20 +30,21 @@ const faqItems = document.querySelectorAll('.faq-item')
 
 faqItems.forEach(item => {
   const question = item.querySelector('.faq-question')
-  const answer = item.querySelector('.faq-answer')
 
   question?.addEventListener('click', () => {
     const isOpen = item.classList.contains('open')
 
-    // Close all other items
+    // Close all other items and update their aria-expanded
     faqItems.forEach(otherItem => {
       if (otherItem !== item) {
         otherItem.classList.remove('open')
+        otherItem.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false')
       }
     })
 
     // Toggle current item
     item.classList.toggle('open', !isOpen)
+    question.setAttribute('aria-expanded', !isOpen ? 'true' : 'false')
   })
 })
 
@@ -77,11 +78,11 @@ window.addEventListener('scroll', () => {
 
       // Header effects
       if (currentScroll > 50) {
-        header?.classList.add('shadow-md', 'bg-white/95', 'backdrop-blur-sm', 'header-shrink')
-        header?.classList.remove('bg-white')
+        header?.classList.add('shadow-subtle', 'border-gray-200/60', 'header-shrink')
+        header?.classList.remove('border-transparent')
       } else {
-        header?.classList.remove('shadow-md', 'bg-white/95', 'backdrop-blur-sm', 'header-shrink')
-        header?.classList.add('bg-white')
+        header?.classList.remove('shadow-subtle', 'border-gray-200/60', 'header-shrink')
+        header?.classList.add('border-transparent')
       }
 
       // Parallax effect on hero phone (subtle float up)
